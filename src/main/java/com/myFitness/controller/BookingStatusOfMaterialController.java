@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class BookingStatusOfMaterialController {
 
 	@Autowired
-	BookingStatusOfMaterialService service;
+	private BookingStatusOfMaterialService service;
 	
 	@PostMapping("/bookMaterial")
 	public ResponseEntity<Boolean> bookMaterial(@RequestBody BookingStatusOfMaterial book) {	
@@ -46,5 +46,13 @@ public class BookingStatusOfMaterialController {
 		return service.bookAsAdmin(booking);
 	}
 	
+	@GetMapping("/checkMemberMaterial/{memberId}")
+	public List<BookingStatusOfMaterial> checkMemberMaterial(@PathVariable("memberId") String memberId) {
+		return service.checkMemberMaterial(Long.parseLong(memberId));
+	}
 	
+	@GetMapping("/rejectBooking/{bookingMaterialId}")
+	public ResponseEntity<Boolean> rejectMaterial(@PathVariable("bookingMaterialId") String bookingMaterialId) {
+		return service.rejectBooking(Long.parseLong(bookingMaterialId));
+	}
 }

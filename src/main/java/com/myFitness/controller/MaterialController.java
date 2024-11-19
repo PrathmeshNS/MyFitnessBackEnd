@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
-@RequestMapping("/material")
+@RequestMapping("/material/")
 public class MaterialController {
 
 	@Autowired
-	MaterialService service;
+	private MaterialService service;
 	
 	@GetMapping("getAllMaterial")
 	public ResponseEntity<List<Material>> getAllMaterial() {
@@ -38,6 +38,11 @@ public class MaterialController {
 	@GetMapping("/getById/{materialId}")
 	public ResponseEntity<Material> getMaterialById(@PathVariable("materialId") String materialId) {
 		return service.getMaterialById(Long.parseLong(materialId));
+	}
+	
+	@GetMapping("numberOfMaterial")
+	public int numberOfMaterial() {
+		return service.numberOfMaterial();
 	}
 	
 }

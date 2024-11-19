@@ -24,6 +24,7 @@ public class Trainer {
 	private String viewBooking;
 	private int aqaureByMember;
 	private String gender;
+	private String forgetPasswordAnswer;
 
 
 	@OneToMany(mappedBy = "trainer")
@@ -111,4 +112,14 @@ public class Trainer {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
+	public String getForgetPasswordAnswer() {
+		return forgetPasswordAnswer;
+	}
+
+	public void setForgetPasswordAnswer(String forgetPasswordAnswer) {
+		this.forgetPasswordAnswer = forgetPasswordAnswer;
+	}
+
+
 }

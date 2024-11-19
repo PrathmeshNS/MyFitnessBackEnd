@@ -13,7 +13,7 @@ import com.myFitness.repository.MaterialRepository;
 public class MaterialService {
 
 	@Autowired
-	MaterialRepository repository;
+ 	private MaterialRepository repository;
 	
 	public ResponseEntity<List<Material>> getAllMaterial() {
 		return ResponseEntity.ok(repository.findAll());
@@ -28,6 +28,10 @@ public class MaterialService {
 	
 	public ResponseEntity<Material> getMaterialById(Long materialId) {
 		return ResponseEntity.ok(repository.getMaterialById(materialId));
+	}
+
+	public int numberOfMaterial() {
+		return repository.numberOfMaterial();
 	}
 
 }

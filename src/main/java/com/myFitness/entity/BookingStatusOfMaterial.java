@@ -64,7 +64,13 @@ public class BookingStatusOfMaterial {
 	public void setMaterial(Material material) {
 		this.material = material;
 	}
-	
+
+
+	@Override
+	public String toString() {
+		return "BookingStatusOfMaterial [bookingMaterialId=" + bookingMaterialId + ", status=" + status + ", member="
+				+ member + ", material=" + material + "]";
+	}
 	
 
 }

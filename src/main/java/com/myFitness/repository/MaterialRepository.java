@@ -14,4 +14,7 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
 	@Query("SELECT m FROM Material m WHERE materialId = :materialId")
 	Material getMaterialById(@Param("materialId")Long materialId);
 
+	@Query("SELECT COUNT(materialId) FROM Material")
+	int numberOfMaterial();
+
 }

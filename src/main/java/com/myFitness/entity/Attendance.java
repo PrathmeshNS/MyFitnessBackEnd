@@ -1,5 +1,7 @@
 package com.myFitness.entity;
 
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
+@Component
 public class Attendance {
 
 	@Id
@@ -62,6 +65,11 @@ public class Attendance {
 		this.outTime = outTime;
 	}
 
+	@Override
+	public String toString() {
+		return "Attendance [attendanceId=" + attendanceId + ", date=" + date + ", inTime=" + inTime + ", outTime="
+				+ outTime + ", member=" + member + "]";
+	}
 	
 }
 

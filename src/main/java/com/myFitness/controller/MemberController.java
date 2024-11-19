@@ -59,8 +59,13 @@ public class MemberController {
 	}
 	
 	@GetMapping("/checkEmail/{email}")
-	public ResponseEntity<Member> checkEmail(@PathVariable("email") String email) {
+	public ResponseEntity<Boolean> checkEmail(@PathVariable("email") String email) {
 		return service.checkMemberEmail(email);
+	}
+	
+	@GetMapping("numberOfMember")
+	public int numberOfMember() {
+		return service.numberOfMember();
 	}
 	
 }

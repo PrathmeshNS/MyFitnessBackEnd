@@ -2,6 +2,8 @@ package com.myFitness.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,9 @@ import com.myFitness.repository.TrainerRepository;
 public class TrainerService {
 
 	@Autowired
-	TrainerRepository repository;
+	private TrainerRepository repository;
+
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	private Trainer findByEmail(String email) {
 		return repository.findByEmail(email);
@@ -25,17 +29,18 @@ public class TrainerService {
 		return ResponseEntity.ok(repository.findAll());
 	}
 
+	@SuppressWarnings("static-access")
 	public ResponseEntity<Boolean> insertTrainer(Trainer trainer) {
-		if (findByEmail(trainer.getEmail())==null) {
+		if (findByEmail(trainer.getEmail()) == null) {
 			trainer.setPassword(EncryptPassword.convertToMD5(trainer.getPassword()));
 			trainer.setApprove(false);
-			if (repository.save(trainer)!=null) {
-				return ResponseEntity.ok(true).status(HttpStatus.CREATED).build();
+			if (repository.save(trainer) != null) {
+				return ResponseEntity.ok(true);
 			}
-		}else{
+		} else {
 			return ResponseEntity.ok("Trainer Already Exits!!").status(HttpStatus.NOT_ACCEPTABLE).build();
 		}
-		return ResponseEntity.ok(false).status(HttpStatus.FORBIDDEN).build();
+		return ResponseEntity.ok(false);
 	}
 
 	public ResponseEntity<List<Trainer>> checkApproveTrainer() {
@@ -44,23 +49,35 @@ public class TrainerService {
 
 	public ResponseEntity<Trainer> loginTrainer(Trainer trainer) {
 		Trainer trainer2 = findByEmail(trainer.getEmail());
-		if (trainer2!=null) {
+		if (trainer2 != null) {
 			trainer.setPassword(EncryptPassword.convertToMD5(trainer.getPassword()));
-			if ((trainer.getEmail().equals(trainer2.getEmail())) && (trainer.getPassword().equals(trainer2.getPassword()))) {
-				if (trainer2.isApprove()) {
-					return ResponseEntity.ok(trainer2).status(HttpStatus.OK).build();
-				}
-				return ResponseEntity.ok("Trainer is Not Approved").status(HttpStatus.NOT_ACCEPTABLE).build();
+			if (trainer.getPassword().equals(trainer2.getPassword())) {
+				return ResponseEntity.ok(trainer2);
 			}
 		}
-		return ResponseEntity.ok(false).status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.ok(null);
 	}
 
 	public ResponseEntity<Boolean> approveTrainer(String trainerId) {
-		return ResponseEntity.ok(repository.approveTrainer(Long.parseLong(trainerId)));
+		if (repository.approveTrainer(Long.parseLong(trainerId)) > 0) {
+			return ResponseEntity.ok(true);
+		}
+		return ResponseEntity.ok(false);
 	}
 
 	public Trainer searchById(Long trainerId) {
 		return repository.checkByTrainerId(trainerId);
+	}
+
+	public ResponseEntity<Trainer> checkEmail(String email) {
+		Trainer trainer = findByEmail(email);
+		if (trainer != null) {
+			return ResponseEntity.ok(trainer);
+		}
+		return ResponseEntity.ok(trainer);
+	}
+
+	public int numberOfTrainer() {
+		return repository.numberOfTrainer();
 	}
 }

@@ -20,12 +20,12 @@ public class AdminController {
 	@Autowired
 	AdminService service;
 	
-	@PostMapping("loginAdmin")
+	@PostMapping("login")
 	public ResponseEntity<Admin> loginAdmin(@RequestBody Admin admin) {	
 		return service.loginAdmin(admin);
 	}
 	
-	@PostMapping("insertAadmin")
+	@PostMapping("insertAdmin")
 	public ResponseEntity<Boolean> saveAdmin(@RequestBody Admin admin) {
 		return service.saveAdmin(admin);
 	}

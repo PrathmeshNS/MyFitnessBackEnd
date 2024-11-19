@@ -19,23 +19,29 @@ public interface TrainerRepository extends JpaRepository<Trainer, Long>{
 	@Query("SELECT t FROM Trainer t WHERE t.approve = true")
 	List<Trainer> checkApproveTrainer();
 
-	@Query("SELECT t FROM Trainer t WHERE t.email = :email")
+	@Query("SELECT t FROM Trainer t WHERE t.email =:email")
     Trainer findByEmail(@Param("email") String email);
 
-	@Query("UPDATE Trainer t SET t.password = :password WHERE t.email = :email")
+	@Query("UPDATE Trainer t SET t.password = :password WHERE t.email =:email")
 	@Transactional
 	@Modifying
 	Trainer updatePassword(@Param("email") String email, @Param("password") String password);
 	
 
-	@Query("DELETE FROM Trainer t WHERE t.trainer_id = :id")
+	@Query("DELETE FROM Trainer t WHERE t.trainer_id =:id")
     Boolean deleteByTrainerId(@Param("id") Long id);
 	
-	@Query("SELECT t FROM Trainer t WHERE t.trainer_id = :id")
+	@Query("SELECT t FROM Trainer t WHERE t.trainer_id =:id")
     Trainer checkByTrainerId(@Param("id") Long id);
 
 	
-	@Query("UPDATE Trainer t SET t.approve = true WHERE t.trainer_id = :trainerId")
-	Boolean approveTrainer(@Param("trainerId")Long trainerId);
+	@Query("UPDATE Trainer t SET t.approve = true WHERE t.trainer_id =:trainer_id")
+	@Modifying
+	@Transactional
+	int approveTrainer(@Param("trainer_id") Long trainer_id);
+
+	
+	@Query("SELECT COUNT(trainer_id) FROM Trainer WHERE approve = true")
+	int numberOfTrainer();
 	
 }

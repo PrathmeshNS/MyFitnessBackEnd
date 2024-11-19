@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 
 @RestController
@@ -56,10 +53,18 @@ public class TrainerController {
 	
 
 	@GetMapping("searchById/{trainerId}")
-	public Trainer getMethodName(@PathVariable("trainer") String trainerId) {
+	public Trainer searchById(@PathVariable("trainerId") String trainerId) {
 		return service.searchById(Long.parseLong(trainerId));
 	}
 	
+	@GetMapping("numberOfTrainer")
+	public int numberOfTrainer() {
+		return service.numberOfTrainer();
+	}
 	
+	@GetMapping("searchByEmail/{trainerEmail}")
+	public ResponseEntity<Trainer> checkEmail(@PathVariable("trainerEmail") String trainerEmail) {
+		return service.checkEmail(trainerEmail);
+	}
 	
 }
